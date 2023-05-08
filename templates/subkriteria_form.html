@@ -10,17 +10,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kriteria</title>
+    <title>Sub Kriteria-Data</title>
 
-     <!-- Custom fonts for this template-->
-     <link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
-     <link
-         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-         rel="stylesheet">
- 
-     <!-- Custom styles for this template-->
-     <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
+    <!-- Custom styles for this template-->
+    <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -114,21 +113,7 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" name="cari" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
+                    <div class=""><h1 class="h3 mb-0 text-gray-800">Sub Kriteria<h1></div>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -168,9 +153,9 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">                              
+                                aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{%url 'logout'%}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -187,81 +172,24 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Kriteria<h1>
-                            <a href="{%url 'data:inkriteria'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-plus fa-sm text-white-50"></i>  Add Data</a>
+                        
                     </div>
 
                     <div class="row">
-
                         <!-- Area tabel -->
                         <div class="col-xl-12 col-lg-9">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card shadow">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Data Kriteria</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Data Sub Kriteria</h6>
                                     </div>
-                                    <div class="card-body table-responsive">
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                <thead class="text-center">
-                                                    <tr>
-                                                        <th>NO</th>
-                                                        <th>SIMBOL</th>                                                        
-                                                        <th>KRITERIA</th>
-                                                        <th>BOBOT</th>
-                                                        <th>AKSI</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>  
-                                                    {%for data in page_obj.object_list%}                                                
-                                                    <tr>
-                                                        <td class="text-center">{{forloop.counter}}</td>
-                                                        <td>{{data.simbol}}</td>
-                                                        <td>{{data.nama_kriteria}}</td>
-                                                        <td>{{data.bobot}}</td>
-                                                        <td class="text-center">
-                                                            <a href="{%url 'data:upkriteria' id=data.id%}" class="btn btn-success btn-icon-split">
-                                                                <span class="icon text-white-25">
-                                                                    <i class="fas fa-check"></i>
-                                                                </span>                                                                
-                                                            </a>
-                                                            <a href="{%url 'data:delkriteria' id=data.id%}" class="btn btn-danger btn-icon-split" onclick="return confirm('yakin ingin menghapus data?')">
-                                                                <span class="icon text-white-25">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </span>                                                                
-                                                            </a>
-                                                        </td>
-                                                    </tr> 
-                                                    {%endfor%}                                                                                                                                                                                                    
-                                                </tbody>
-                                            </table>
-
-                                            <div class="col-sm-12 col-md-7">
-                                                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                                    <ul class="pagination">
-                                                        {% if page_obj.has_previous %}
-                                                        <li class="paginate_button page-item previous" id="dataTable_previous">
-                                                            <a href="?page={{page_obj.previous_page_number}}" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                                        </li>
-                                                        {% endif %}
-
-                                                        {%for num_pages in page_obj.paginator.page_range%}
-                                                        {%if page_obj.number == num_pages %}
-                                                        <li class="paginate_button page-item active"><a href="{%url 'data:kriteria'%}?page={{num_pages}}" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">{{num_pages}}</a></li>
-                                                        {%else%}
-                                                        <li class="paginate_button page-item "><a href="{%url 'data:kriteria'%}?page={{num_pages}}" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">{{num_pages}}</a></li>
-                                                        {%endif%}
-                                                        {%endfor%}
-
-                                                        {% if page_obj.has_next %}
-                                                        <li class="paginate_button page-item next" id="dataTable_next">
-                                                            <a href="?page={{page_obj.next_page_number}}" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                                                        </li>
-                                                        {%endif%}
-                                                    </ul>
-                                                </div>
-                                            </div>                                        
+                                    <div class="card-body ">
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            <button class="btn btn-primary" type="submit">Simpan</button>
+                                          </form>
                                     </div>
                                 </div>                               
                             </div>

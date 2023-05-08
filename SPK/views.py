@@ -58,7 +58,20 @@ def alternatif_delete(request, id):
 # fungsi untuk menampilkan semua data kriteria
 def kriteria_list(request):
     kriteria = Kriteria.objects.all()
-    return render(request, 'kriteria.html', {'datas': kriteria})
+    cari = request.GET.get('cari')
+    if cari:
+        page=Kriteria.objects.filter(Q(simbol__icontains=cari) |Q(nama_kriteria__icontains=cari))
+    else:        
+        page = Kriteria.objects.all()
+
+    halaman = Paginator(page,3)
+    page_list = request.GET.get('page')
+    page = halaman.get_page(page_list)  
+    context ={
+        'datas': kriteria,
+        'page_obj':page,
+    }
+    return render(request, 'kriteria.html', context)
 
 # fungsi untuk menambah data kriteria baru
 def kriteria_create(request):
@@ -66,32 +79,45 @@ def kriteria_create(request):
         form = KriteriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('kriteria_list')
+            return redirect('data:kriteria')
     else:
         form = KriteriaForm()
     return render(request, 'kriteria_form.html', {'form': form})
 
 # fungsi untuk mengubah data kriteria yang sudah ada
-def kriteria_update(request, pk):
-    kriteria = get_object_or_404(Kriteria, pk=pk)
+def kriteria_update(request, id):
+    kriteria = get_object_or_404(Kriteria, id=id)
     if request.method == 'POST':
         form = KriteriaForm(request.POST, instance=kriteria)
         if form.is_valid():
             form.save()
-            return redirect('kriteria')
+            return redirect('data:kriteria')
     else:
         form = KriteriaForm(instance=kriteria)
     return render(request, 'kriteria_form.html', {'form': form})
 
 # fungsi untuk menghapus data kriteria yang sudah ada
-def kriteria_delete(request, pk):
-    kriteria = get_object_or_404(Kriteria, pk=pk)
+def kriteria_delete(request, id):
+    kriteria = get_object_or_404(Kriteria, id=id)
     kriteria.delete()
-    return redirect('kriteria')
+    return redirect('data:kriteria')
 
 def subkriteria_list(request):
     subkriteria = SubKriteria.objects.all()
-    return render(request, 'subkriteria.html', {'datas': subkriteria})
+    cari = request.GET.get('cari')
+    if cari:
+        page=SubKriteria.objects.filter(Q(kriteria__nama_kriteria__icontains=cari) | Q(nama_sub_kriteria__icontains=cari))
+    else:        
+        page = SubKriteria.objects.all()
+
+    halaman = Paginator(page,3)
+    page_list = request.GET.get('page')
+    page = halaman.get_page(page_list)  
+    context ={
+        'datas': subkriteria,
+        'page_obj':page,
+    }
+    return render(request, 'subkriteria.html', context)
 
 def subkriteria_create(request):
     form = SubKriteriaForm()
@@ -99,25 +125,23 @@ def subkriteria_create(request):
         form = SubKriteriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('subkriteria')
-    return render(request, 'subkriteria/subkriteria_create.html', {'form': form})
+            return redirect('data:sub_kriteria')
+    return render(request, 'subkriteria_form.html', {'form': form})
 
-def subkriteria_update(request, pk):
-    subkriteria = SubKriteria.objects.get(pk=pk)
+def subkriteria_update(request, id):
+    subkriteria = SubKriteria.objects.get(id=id)
     form = SubKriteriaForm(instance=subkriteria)
     if request.method == 'POST':
         form = SubKriteriaForm(request.POST, instance=subkriteria)
         if form.is_valid():
             form.save()
-            return redirect('subkriteria')
-    return render(request, 'subkriteria/subkriteria_update.html', {'form': form})
+            return redirect('data:sub_kriteria')
+    return render(request, 'subkriteria_form.html', {'form': form})
 
-def subkriteria_delete(request, pk):
-    subkriteria = SubKriteria.objects.get(pk=pk)
-    if request.method == 'POST':
-        subkriteria.delete()
-        return redirect('subkriteria')
-    return render(request, 'subkriteria/subkriteria_delete.html', {'subkriteria': subkriteria})
+def subkriteria_delete(request, id):
+    subkriteria = get_object_or_404(SubKriteria, id=id)
+    subkriteria.delete()
+    return redirect('data:sub_kriteria')
 
 def create_penilaian(request):
     if request.method == 'POST':

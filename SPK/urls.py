@@ -16,9 +16,9 @@ urlpatterns = [
     path('delkriteria/<int:id>', views.kriteria_delete, name='delkriteria'),
     # subkriteria
     path('sub_kriteria/', views.subkriteria_list, name='sub_kriteria'),
-    path('insub_kriteria/', views.subkriteria_create, name='insub_kriteria'),
-    path('upsub_kriteria/<int:id>', views.subkriteria_update, name='upsub_kriteria'),
-    path('delsub_kriteria/<int:id>', views.subkriteria_delete, name='delsub_kriteria'),
+    path('insub_kriteria/', views.subkriteria_create, name='insubkriteria'),
+    path('upsub_kriteria/<int:id>', views.subkriteria_update, name='upsubkriteria'),
+    path('delsub_kriteria/<int:id>', views.subkriteria_delete, name='delsubkriteria'),
     # penilaian
     path('penilaian/', views.penilaian_list, name='penilaian'),
     path('inperengkingan/', views.create_penilaian, name='inperengkingan'),
