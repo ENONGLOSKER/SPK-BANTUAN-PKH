@@ -21,9 +21,9 @@ urlpatterns = [
     path('delsub_kriteria/<int:id>', views.subkriteria_delete, name='delsubkriteria'),
     # penilaian
     path('penilaian/', views.penilaian_list, name='penilaian'),
-    path('inperengkingan/', views.create_penilaian, name='inperengkingan'),
+    path('inpenilaian/', views.create_penilaian, name='inpenilaian'),
     path('uppenilaian/<int:id>', views.update_penilaian, name='uppenilaian'),
-    path('delperengkingan/<int:id>', views.delete_penilaian, name='delperengkingan'),
+    path('delpenilaian/<int:id>', views.delete_penilaian, name='delpenilaian'),
     # rengking 
     path('rengking/', views.rengking, name='perengkingan'),
 ]

@@ -27,10 +27,9 @@ class SubKriteria(models.Model):
     nilai_sub_kriteria = models.IntegerField()
 
     def __str__(self):
-        return self.nama_sub_kriteria
+        return str(self.nama_sub_kriteria)
 
 class Penilaian(models.Model):
-    simbol = models.ForeignKey(Alternatif, on_delete=models.CASCADE, related_name='penilaian_simbol', to_field='simbol')
     nama = models.ForeignKey(Alternatif, on_delete=models.CASCADE, related_name='penilaian_nama', to_field='nama_alternatif')
     kondisi_rumah = models.ForeignKey(SubKriteria, on_delete=models.CASCADE, related_name='penilaian_kondisi_rumah')
     penghasilan = models.ForeignKey(SubKriteria, on_delete=models.CASCADE, related_name='penilaian_penghasilan')
@@ -39,24 +38,4 @@ class Penilaian(models.Model):
     anak_sekolah = models.ForeignKey(SubKriteria, on_delete=models.CASCADE, related_name='penilaian_anak_sekolah')
 
     def __str__(self):
-        return str(self.simbol)
-
-    @property
-    def nilai_kondisi_rumah(self):
-        return self.kondisi_rumah.nilai_sub_kriteria
-
-    @property
-    def nilai_penghasilan(self):
-        return self.penghasilan.nilai_sub_kriteria
-
-    @property
-    def nilai_bumil_dan_bunsui(self):
-        return self.bumil_dan_bunsui.nilai_sub_kriteria
-
-    @property
-    def nilai_lansia(self):
-        return self.lansia.nilai_sub_kriteria
-
-    @property
-    def nilai_anak_sekolah(self):
-        return self.anak_sekolah.nilai_sub_kriteria
+        return str(self.nama)

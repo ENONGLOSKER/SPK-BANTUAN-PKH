@@ -222,13 +222,13 @@
                                     <tbody>
                                         {%for data in datas%}                                   
                                         <tr>
-                                            <td>{{forloop.counter}}</td>
-                                            <td>{{data.nama}}</td>
-                                            <td>{{data.kondisi_rumah}}</td>
-                                            <td>{{data.penghasilan}}</td>
-                                            <td>{{data.bumil_dan_bunsui}}</td>
-                                            <td>{{data.lansia}}</td>
-                                            <td>{{data.anak_sekolah}}</td>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ data.nama }}</td>
+                                            <td>{{ data.kondisi_rumah.nilai_sub_kriteria }}</td>
+                                            <td>{{ data.penghasilan.nilai_sub_kriteria }}</td>
+                                            <td>{{ data.bumil_dan_bunsui.nilai_sub_kriteria }}</td>
+                                            <td>{{ data.lansia.nilai_sub_kriteria }}</td>
+                                            <td>{{ data.anak_sekolah.nilai_sub_kriteria }}</td>
                                         </tr>
                                         {%endfor%}
                                     </tbody>
@@ -242,35 +242,38 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Data Nilai Normalisasi Matrik</h6>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>                                   
-                                <tbody>                                   
-                                    <!-- <tr>
-                                        <td>{{ penilaian.id }}</td>
-                                        <td>{{ penilaian.simbol }}</td>
-                                        <td>{{ penilaian.nama }}</td>
-                                        <td>{{ nilai_kondisi_rumah }}</td>
-                                        <td>{{ nilai_penghasilan }}</td>
-                                        <td>{{ nilai_bumil_dan_bunsui }}</td>
-                                        <td>{{ nilai_lansia }}</td>
-                                        <td>{{ nilai_anak_sekolah}}</td>
-                                         -->
-                                    </tr>
-
-                                </tbody>
-                            </table>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                    </thead>                                   
+                                    <tbody>                                   
+                                        <!-- <tr>
+                                            <td>{{ penilaian.id }}</td>
+                                            <td>{{ penilaian.simbol }}</td>
+                                            <td>{{ penilaian.nama }}</td>
+                                            <td>{{ nilai_kondisi_rumah }}</td>
+                                            <td>{{ nilai_penghasilan }}</td>
+                                            <td>{{ nilai_bumil_dan_bunsui }}</td>
+                                            <td>{{ nilai_lansia }}</td>
+                                            <td>{{ nilai_anak_sekolah}}</td>
+                                             -->
+                                        </tr>
+    
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                        
                     </div>
                     <br>
                     <!-- DataTales Example -->
@@ -278,7 +281,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Data Nilai Evaluasi</h6>
                         </div>
-                        <div class="table-responsive">
+                        <div class=" card-body table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
@@ -365,7 +368,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="{%url 'logout'%}">Logout</a>
                 </div>
             </div>
         </div>

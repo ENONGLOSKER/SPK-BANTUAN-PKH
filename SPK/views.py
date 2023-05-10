@@ -110,7 +110,7 @@ def subkriteria_list(request):
     else:        
         page = SubKriteria.objects.all()
 
-    halaman = Paginator(page,3)
+    halaman = Paginator(page,5)
     page_list = request.GET.get('page')
     page = halaman.get_page(page_list)  
     context ={
@@ -148,7 +148,7 @@ def create_penilaian(request):
         form = PenilaianForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('penilaian')
+            return redirect('data:penilaian')
     else:
         form = PenilaianForm()
     
@@ -156,7 +156,7 @@ def create_penilaian(request):
         'form': form
     }
 
-    return render(request, 'create_penilaian.html', context)
+    return render(request, 'penilaian_form.html', context)
 
 def penilaian_list(request):
     penilaian = Penilaian.objects.all()
@@ -167,14 +167,14 @@ def penilaian_list(request):
 
     return render(request, 'penilaian.html', context)
 
-def update_penilaian(request, penilaian_id):
-    penilaian = Penilaian.objects.get(id=penilaian_id)
+def update_penilaian(request, id):
+    penilaian = Penilaian.objects.get(id=id)
 
     if request.method == 'POST':
         form = PenilaianForm(request.POST, instance=penilaian)
         if form.is_valid():
             form.save()
-            return redirect('penilaian')
+            return redirect('data:penilaian')
     else:
         form = PenilaianForm(instance=penilaian)
     
@@ -182,20 +182,20 @@ def update_penilaian(request, penilaian_id):
         'form': form
     }
 
-    return render(request, 'update_penilaian.html', context)
+    return render(request, 'penilaian_form.html', context)
 
-def delete_penilaian(request, penilaian_id):
-    penilaian = Penilaian.objects.get(id=penilaian_id)
+def delete_penilaian(request,id):
+    penilaian = Penilaian.objects.get(id=id)
 
     if request.method == 'POST':
         penilaian.delete()
-        return redirect('penilaian')
+        return redirect('data:penilaian')
 
     context = {
         'penilaian': penilaian
     }
 
-    return render(request, 'delete_penilaian.html', context)
+    return render(request, 'penilaian.html', context)
 
 def rengking(request):
 

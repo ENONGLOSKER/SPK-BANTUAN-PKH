@@ -33,15 +33,18 @@ class SubKriteriaForm(forms.ModelForm):
         }
 
 class PenilaianForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['kondisi_rumah'].queryset = SubKriteria.objects.filter(kriteria__nama_kriteria='Kondisi Rumah')
+        self.fields['penghasilan'].queryset = SubKriteria.objects.filter(kriteria__nama_kriteria='Penghasilan')
+        self.fields['bumil_dan_bunsui'].queryset = SubKriteria.objects.filter(kriteria__nama_kriteria='Bumil dan Bunsui')
+        self.fields['lansia'].queryset = SubKriteria.objects.filter(kriteria__nama_kriteria='Lansia')
+        self.fields['anak_sekolah'].queryset = SubKriteria.objects.filter(kriteria__nama_kriteria='Anak Sekolah')
+
+        # Add Bootstrap classes to form fields
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
     class Meta:
         model = Penilaian
         fields = '__all__'
-        widgets = {
-            'simbol': forms.Select(attrs={'class': 'form-control'}),
-            'nama': forms.Select(attrs={'class': 'form-control'}),
-            'kondisi_rumah': forms.Select(attrs={'class': 'form-control'}),
-            'penghasilan': forms.Select(attrs={'class': 'form-control'}),
-            'bumil_dan_bunsui': forms.Select(attrs={'class': 'form-control'}),
-            'lansia': forms.Select(attrs={'class': 'form-control'}),
-            'anak_sekolah': forms.Select(attrs={'class': 'form-control'}),
-        }
