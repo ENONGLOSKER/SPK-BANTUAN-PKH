@@ -9,3 +9,6 @@ Sistem Pendukung Keputusan Penerimaan Bantuan PKH
 
 ## v.3 = push ketiga : 
 - menyelesaiakan halaman penilaian-part 01 'tabel penilaian' (menambah dan melihat penilaian berdasrkan alternatif dengan masing-masing kriteria yang memiliki subkriteria dengan nilai tertentu).
+
+## v.4 = push keempat : 
+- menyelesaiakan halaman penilaian-part 02 'tabel normalisasi dan perengkingan'
