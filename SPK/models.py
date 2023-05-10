@@ -16,7 +16,7 @@ class Alternatif(models.Model):
 class Kriteria(models.Model):
     simbol          = models.CharField(max_length=50)
     nama_kriteria   = models.CharField(max_length=50)
-    bobot           = models.DecimalField(max_digits=2, decimal_places=2)
+    bobot           = models.FloatField()
 
     def __str__(self):
         return self.nama_kriteria

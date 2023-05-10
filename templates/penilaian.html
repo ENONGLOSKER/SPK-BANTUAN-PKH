@@ -162,27 +162,16 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{%static 'img/undraw_profile.svg'%}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+                                
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{%url 'logout'%}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -219,18 +208,34 @@
                                             <th>ANAK SEKOLAH (15%)</th>
                                         </tr>
                                     </thead>                                   
-                                    <tbody>
+                                    <tbody >
                                         {%for data in datas%}                                   
                                         <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ data.nama }}</td>
-                                            <td>{{ data.kondisi_rumah.nilai_sub_kriteria }}</td>
-                                            <td>{{ data.penghasilan.nilai_sub_kriteria }}</td>
-                                            <td>{{ data.bumil_dan_bunsui.nilai_sub_kriteria }}</td>
-                                            <td>{{ data.lansia.nilai_sub_kriteria }}</td>
-                                            <td>{{ data.anak_sekolah.nilai_sub_kriteria }}</td>
+                                            <td class="text-center">{{ forloop.counter }}</td>
+                                            <td >{{ data.nama }}</td>
+                                            <td class="text-center">{{ data.kondisi_rumah.nilai_sub_kriteria }}</td>
+                                            <td class="text-center">{{ data.penghasilan.nilai_sub_kriteria }}</td>
+                                            <td class="text-center">{{ data.bumil_dan_bunsui.nilai_sub_kriteria }}</td>
+                                            <td class="text-center">{{ data.lansia.nilai_sub_kriteria }}</td>
+                                            <td class="text-center">{{ data.anak_sekolah.nilai_sub_kriteria }}</td>
                                         </tr>
                                         {%endfor%}
+                                        <tr class="text-center font-weight-bold">
+                                            <td colspan="2" class="table-primary ">NILAI MAX</td>                                
+                                            <td>{{ max_kondisi_rumah }}</td>
+                                            <td>{{ max_penghasilan }}</td>
+                                            <td>{{ max_bumil_dan_bunsui }}</td>
+                                            <td>{{ max_lansia }}</td>
+                                            <td>{{ max_anak_sekolah }}</td>
+                                        </tr>
+                                        <tr class="text-center font-weight-bold">
+                                            <td colspan="2" class="table-success"  >NILAI MIN</td>                                            
+                                            <td>{{ min_kondisi_rumah }}</td>
+                                            <td>{{ min_penghasilan }}</td>
+                                            <td>{{ min_bumil_dan_bunsui }}</td>
+                                            <td>{{ min_lansia }}</td>
+                                            <td>{{ min_anak_sekolah }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -246,29 +251,28 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                            <th>Salary</th>
+                                        <tr class="text-center">
+                                            <th>NO</th>
+                                            <th>ALTERNATIF</th>
+                                            <th>RUMAH (25%)</th>
+                                            <th>PENGHASILAN (30%)</th>
+                                            <th>BUMIL & BUNSUI (10%)</th>
+                                            <th>LANSIA (20%)</th>
+                                            <th>ANAK SEKOLAH (15%)</th>
                                         </tr>
                                     </thead>                                   
-                                    <tbody>                                   
-                                        <!-- <tr>
-                                            <td>{{ penilaian.id }}</td>
-                                            <td>{{ penilaian.simbol }}</td>
-                                            <td>{{ penilaian.nama }}</td>
-                                            <td>{{ nilai_kondisi_rumah }}</td>
-                                            <td>{{ nilai_penghasilan }}</td>
-                                            <td>{{ nilai_bumil_dan_bunsui }}</td>
-                                            <td>{{ nilai_lansia }}</td>
-                                            <td>{{ nilai_anak_sekolah}}</td>
-                                             -->
+                                    <tbody >
+                                        {%for norml in normalisasi%}                                   
+                                        <tr>
+                                            <td class="text-center">{{ forloop.counter }}</td>
+                                            <td >{{ norml.nama }}</td>
+                                            <td class="text-center">{{ norml.kondisi_rumah_normalized}}</td>
+                                            <td class="text-center">{{ norml.penghasilan_normalized }}</td>
+                                            <td class="text-center">{{ norml.bumil_dan_bunsui_normalized }}</td>
+                                            <td class="text-center">{{ norml.lansia_normalized }}</td>
+                                            <td class="text-center">{{ norml.anak_sekolah_normalized }}</td>
                                         </tr>
-    
+                                        {%endfor%}
                                     </tbody>
                                 </table>
                             </div>
@@ -284,44 +288,31 @@
                         <div class=" card-body table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                        <th>Salary</th>
+                                    <tr class="text-center">
+                                        <th>NO</th>
+                                        <th>ALTERNATIF</th>
+                                        <th>RUMAH</th>
+                                        <th>PENGHASILAN</th>
+                                        <th>BUMIL & BUNSUI</th>
+                                        <th>LANSIA</th>
+                                        <th>ANAK SEKOLAH</th>
+                                        <th>TOTAL NILAI EVALUASI</th>
                                     </tr>
                                 </thead>                                   
-                                <tbody>                                   
+                                <tbody >
+                                    {%for reng in normalisasi%}                                   
                                     <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                        <td>$112,000</td>
+                                        <td class="text-center">{{ forloop.counter }}</td>
+                                        <td >{{ reng.nama }}</td>
+                                        <td class="text-center">{{ reng.kondisi_rumah_normalized}} x {{bobot_kondisi_rumah}}</td>
+                                        <td class="text-center">{{ reng.penghasilan_normalized }} x {{bobot_penghasilan}}</td>
+                                        <td class="text-center">{{ reng.bumil_dan_bunsui_normalized }} x {{bobot_bumil_dan_bunsui}}</td>
+                                        <td class="text-center">{{ reng.lansia_normalized }} x {{bobot_lansia}}</td>
+                                        <td class="text-center">{{ reng.anak_sekolah_normalized }} x {{bobot_anak_sekolah}}</td>
+                                        <td class="text-center"></td>
                                     </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                        <td>$112,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                        <td>$112,000</td>
-                                    </tr>
+                                    {%endfor%}
+                                    
                                 </tbody>
                             </table>
                         </div>
