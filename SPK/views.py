@@ -3,7 +3,7 @@ from .models import Alternatif, Kriteria, SubKriteria, Penilaian
 from .forms import AlternatifForm, KriteriaForm, SubKriteriaForm, PenilaianForm
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.db.models import Max, Min, F
+from django.db.models import Sum,Max, Min, F
 from django.db.models.functions import Coalesce
 
 # fungsi untuk menampilkan semua data alternatif
@@ -219,12 +219,12 @@ def penilaian_list(request):
         bumil_dan_bunsui_score=F('bumil_dan_bunsui_normalized') * bobot_bumil_dan_bunsui,
         lansia_score=F('lansia_normalized') * bobot_lansia,
         anak_sekolah_score=F('anak_sekolah_normalized') * bobot_anak_sekolah,
+    ).annotate(
+        total_score=F('kondisi_rumah_score') + F('penghasilan_score') + F('bumil_dan_bunsui_score') + F('lansia_score') + F('anak_sekolah_score')
     )
-    print(bobot_kondisi_rumah)
-
 
     context = {
-        'datas': penilaian,
+        'datas': penilaian,        
         'normalisasi': normalisasi,
         'max_kondisi_rumah': max_kondisi_rumah,
         'min_kondisi_rumah': min_kondisi_rumah,
@@ -241,7 +241,7 @@ def penilaian_list(request):
         'bobot_penghasilan':bobot_penghasilan,
         'bobot_bumil_dan_bunsui':bobot_bumil_dan_bunsui,
         'bobot_lansia':bobot_lansia,
-        'bobot_anak_sekolah':bobot_anak_sekolah,
+        'bobot_anak_sekolah':bobot_anak_sekolah ,
         }
 
     return render(request, 'penilaian.html', context)
