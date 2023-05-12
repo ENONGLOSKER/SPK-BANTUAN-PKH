@@ -12,3 +12,9 @@ Sistem Pendukung Keputusan Penerimaan Bantuan PKH
 
 ## v.4 = push keempat : 
 - menyelesaiakan halaman penilaian-part 02 'tabel normalisasi dan perengkingan'
+
+## v.5 = push kelima :
+menyelesaiakan halaman penilaian-part 03 'Data Nilai Evaluasi'
+
+## v.6 = push keenam :
+menyelesaiakan halaman penilaian

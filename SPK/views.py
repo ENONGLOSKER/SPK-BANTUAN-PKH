@@ -4,7 +4,7 @@ from .forms import AlternatifForm, KriteriaForm, SubKriteriaForm, PenilaianForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.db.models import Sum,Max, Min, F
-from django.db.models.functions import Coalesce
+from django.db.models.functions import Coalesce,Cast,Round
 
 # fungsi untuk menampilkan semua data alternatif
 def alternatif_list(request):
@@ -220,7 +220,7 @@ def penilaian_list(request):
         lansia_score=F('lansia_normalized') * bobot_lansia,
         anak_sekolah_score=F('anak_sekolah_normalized') * bobot_anak_sekolah,
     ).annotate(
-        total_score=F('kondisi_rumah_score') + F('penghasilan_score') + F('bumil_dan_bunsui_score') + F('lansia_score') + F('anak_sekolah_score')
+    total_score=Round(F('kondisi_rumah_score') + F('penghasilan_score') + F('bumil_dan_bunsui_score') + F('lansia_score') + F('anak_sekolah_score'), 2)
     )
 
     context = {

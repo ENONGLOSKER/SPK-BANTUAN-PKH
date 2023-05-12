@@ -296,7 +296,8 @@
                                         <th>BUMIL & BUNSUI</th>
                                         <th>LANSIA</th>
                                         <th>ANAK SEKOLAH</th>
-                                        <th>TOTAL NILAI EVALUASI</th>
+                                        <th>TOTAL NILAI</th>
+                                        <th>KET</th>
                                     </tr>
                                 </thead>                                   
                                 <tbody >
@@ -309,7 +310,15 @@
                                         <td class="text-center">{{ reng.bumil_dan_bunsui_normalized }} x {{bobot_bumil_dan_bunsui}}</td>
                                         <td class="text-center">{{ reng.lansia_normalized }} x {{bobot_lansia}}</td>
                                         <td class="text-center">{{ reng.anak_sekolah_normalized }} x {{bobot_anak_sekolah}}</td>
-                                        <td class="text-center">{{ reng.total_score }} </td>
+                                        <td class="text-center">{{ reng.total_score }} </td>                                        
+                                        <td class="text-center text-gray-400">
+                                            {% if reng.total_score >= 0.9 %}
+                                                <span class="text-primary font-weight-bold">Layak</span>
+                                            {% else %}
+                                                Tidak Layak
+                                            {% endif %}
+                                        </td>
+                                        
                                     </tr>
                                     {%endfor%}
                                     
