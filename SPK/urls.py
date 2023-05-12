@@ -26,4 +26,6 @@ urlpatterns = [
     path('delpenilaian/<int:id>', views.delete_penilaian, name='delpenilaian'),
     # rengking 
     path('rengking/', views.rengking, name='perengkingan'),
+    # laporan    
+    path('laporan/', views.print_laporan, name='print'),
 ]

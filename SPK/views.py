@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Alternatif, Kriteria, SubKriteria, Penilaian
+from .models import Alternatif, Kriteria, SubKriteria, Penilaian,Rengking
 from .forms import AlternatifForm, KriteriaForm, SubKriteriaForm, PenilaianForm
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.db.models import Sum,Max, Min, F
+from django.db.models import Sum, Max, Min, F
 from django.db.models.functions import Coalesce,Cast,Round
+from django.core.exceptions import ObjectDoesNotExist
+from datetime import date
 
 # fungsi untuk menampilkan semua data alternatif
 def alternatif_list(request):
@@ -205,7 +207,6 @@ def penilaian_list(request):
     bobot_lansia = kriteria.get(nama_kriteria='Lansia').bobot
     bobot_anak_sekolah = kriteria.get(nama_kriteria='Anak Sekolah').bobot
 
-
     # NORMALISASI
     normalisasi = Penilaian.objects.annotate(
         kondisi_rumah_normalized=Coalesce(F('kondisi_rumah__nilai_sub_kriteria') / Max('kondisi_rumah__nilai_sub_kriteria'), 0),
@@ -220,8 +221,36 @@ def penilaian_list(request):
         lansia_score=F('lansia_normalized') * bobot_lansia,
         anak_sekolah_score=F('anak_sekolah_normalized') * bobot_anak_sekolah,
     ).annotate(
-    total_score=Round(F('kondisi_rumah_score') + F('penghasilan_score') + F('bumil_dan_bunsui_score') + F('lansia_score') + F('anak_sekolah_score'), 2)
+        total_score=Round(F('kondisi_rumah_score') + F('penghasilan_score') + F('bumil_dan_bunsui_score') + F('lansia_score') + F('anak_sekolah_score'), 2)
     )
+
+    # Simpan data rengking
+    rengking_list = []
+    for reng in normalisasi:
+        try:
+            alternatif = Alternatif.objects.get(nama_alternatif=reng.nama.nama_alternatif)
+        except ObjectDoesNotExist:
+            # Handle jika tidak ditemukan instance Alternatif
+            continue
+
+        rengking = Rengking(
+            alternatif=alternatif,
+            rumah=f"{reng.kondisi_rumah_normalized} x {bobot_kondisi_rumah}",
+            penghasilan=f"{reng.penghasilan_normalized} x {bobot_penghasilan}",
+            bumil_bunsui=f"{reng.bumil_dan_bunsui_normalized} x {bobot_bumil_dan_bunsui}",
+            lansia=f"{reng.lansia_normalized} x {bobot_lansia}",
+            anak_sekolah=f"{reng.anak_sekolah_normalized} x {bobot_anak_sekolah}",
+            total_nilai=reng.total_score,
+            ket='Layak' if reng.total_score >= 0.6 else 'Tidak Layak'
+        )
+        rengking_list.append(rengking)
+
+    # Menghapus data rengking sebelumnya
+    Rengking.objects.all().delete()
+
+    # Menyimpan data ke tabel Rengking
+    Rengking.objects.bulk_create(rengking_list)
+
 
     context = {
         'datas': penilaian,        
@@ -277,9 +306,22 @@ def delete_penilaian(request,id):
     return render(request, 'penilaian.html', context)
 
 def rengking(request):
+    rengking_data = Rengking.objects.all().order_by('-total_nilai')
 
     context = {
-    
+        'rengking_data': rengking_data,
     }
 
     return render(request, 'rengking.html', context)
+
+def print_laporan(request):
+    # Logika untuk mendapatkan tanggal saat ini
+    tanggal = date.today().strftime("%d %B %Y")
+
+    context = {
+        'rengking_data': Rengking.objects.all(),
+        'tanggal': tanggal,
+    }
+
+    return render(request, 'laporan.html', context)
+

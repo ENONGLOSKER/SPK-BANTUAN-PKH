@@ -112,7 +112,7 @@
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
+                        <i class="fa fa-bars"></i>                       
                     </button>
 
                     <!-- Topbar Search -->
@@ -187,8 +187,11 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Penilaian</h1>
-
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Penilaian<h1>
+                            <a href="{%url 'data:inpenilaian'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-plus fa-sm text-white-50"></i>  Add Data</a>
+                    </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -212,7 +215,20 @@
                                         {%for data in datas%}                                   
                                         <tr>
                                             <td class="text-center">{{ forloop.counter }}</td>
-                                            <td >{{ data.nama }}</td>
+                                            <td >
+                                                <div class="dropdown no-arrow">
+                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        {{ data.nama }}
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                        aria-labelledby="dropdownMenuLink">
+                                                        <div class="dropdown-header">Action:</div>
+                                                        <a class="dropdown-item" href="{%url 'data:uppenilaian' id=data.id%}">Edit</a>                                                        
+                                                        <a class="dropdown-item" href="{%url 'data:delkriteria' id=data.id%}" onclick="return confirm('yakin ingin menghapus data?')">Hapus</a>                                                        
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td class="text-center">{{ data.kondisi_rumah.nilai_sub_kriteria }}</td>
                                             <td class="text-center">{{ data.penghasilan.nilai_sub_kriteria }}</td>
                                             <td class="text-center">{{ data.bumil_dan_bunsui.nilai_sub_kriteria }}</td>
@@ -312,7 +328,7 @@
                                         <td class="text-center">{{ reng.anak_sekolah_normalized }} x {{bobot_anak_sekolah}}</td>
                                         <td class="text-center">{{ reng.total_score }} </td>                                        
                                         <td class="text-center text-gray-400">
-                                            {% if reng.total_score >= 0.9 %}
+                                            {% if reng.total_score >= 0.6 %}
                                                 <span class="text-primary font-weight-bold">Layak</span>
                                             {% else %}
                                                 Tidak Layak
@@ -337,7 +353,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; elq132</span>
                     </div>
                 </div>
             </footer>

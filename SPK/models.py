@@ -39,3 +39,17 @@ class Penilaian(models.Model):
 
     def __str__(self):
         return str(self.nama)
+
+class Rengking(models.Model):
+    alternatif = models.ForeignKey(Alternatif, on_delete=models.CASCADE)
+    rumah = models.CharField(max_length=50)
+    penghasilan = models.CharField(max_length=50)
+    bumil_bunsui = models.CharField(max_length=50)
+    lansia = models.CharField(max_length=50)
+    anak_sekolah = models.CharField(max_length=50)
+    total_nilai = models.FloatField()
+    ket = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.alternatif)
+
