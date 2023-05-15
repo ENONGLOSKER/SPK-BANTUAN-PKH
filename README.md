@@ -42,6 +42,11 @@ Lihat demo di link berikut :
 ```bash
   python -m venv env
 ```
+- aktifkan env
+
+```bash
+  env\Scripts\activate
+```
 - install semua kebutuhan
 
 ```bash
