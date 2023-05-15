@@ -47,15 +47,15 @@ Lihat demo di link berikut :
 ```bash
   env\Scripts\activate
 ```
-- install semua kebutuhan
-
-```bash
-  pip install -r requirements.txt
-```
 - masuk ke folder project
 
 ```bash
   cd SPK-BANTUAN-PKH
+```
+- install semua kebutuhan
+
+```bash
+  pip install -r requirements.txt
 ```
 - Jalankan project
 
