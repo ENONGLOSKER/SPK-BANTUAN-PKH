@@ -1,6 +1,8 @@
 # SPK-BANTUAN-PKH
 Sistem Pendukung Keputusan Penerimaan Bantuan PKH
 
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 [![GitLab last commit](https://badgen.net/gitlab/last-commit/NickBusey/HomelabOS/)](https://gitlab.com/NickBusey/HomelabOS/-/commits)
 
 ## v.1 = push pertama : 
