@@ -1,5 +1,5 @@
-# SPK-BANTUAN-PKH
-Sistem Pendukung Keputusan Penerimaan Bantuan PKH
+# Sistem Pendukung Keputusan Penerimaan Bantuan PKH
+
 ![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/SPK.png?raw=true)
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
