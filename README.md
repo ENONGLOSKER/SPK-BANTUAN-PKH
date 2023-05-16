@@ -1,4 +1,4 @@
-# Sistem Pendukung Keputusan Penerimaan Bantuan PKH
+# Sistem Pendukung Keputusan
 
 ![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/SPK.png?raw=true)
 
