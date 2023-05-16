@@ -4,7 +4,7 @@
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-[![GitLab last commit](https://badgen.net/github/last-commit/ENONGLOSKER/SPK-BANTUAN-PKH/)](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/commits/master)
+[![Github last commit](https://badgen.net/github/last-commit/ENONGLOSKER/SPK-BANTUAN-PKH/)](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/commits/master)
 
 ## v.1 = push pertama : 
 - menyelesaiakan tamppilan home, tampilan login berserte fungsinya dan pop up login berhasil & gagal, tampilan register beserta fungsinya dan pop up login berhasil & gagal, menu logout beserta fungsiny, tampilan kriteria, tampilan sub kriteria, tampilan penilaian, halaman alternatif beserta pop up berhasil (menambah, melihat, mengedit dan menghapus data alternatif), fitur paginations dan fitur searching.
