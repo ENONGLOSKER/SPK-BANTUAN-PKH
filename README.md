@@ -7,13 +7,13 @@
 [![GitLab last commit](https://badgen.net/github/last-commit/ENONGLOSKER/SPK-BANTUAN-PKH/)](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/commits/master)
 
 ## v.1 = push pertama : 
-- menyelesaiakan tamppilan home, tampilan login berserte fungsinya dan pop up login berhasil & gagal, tampilan register beserta fungsinya dan pop up login berhasil & gagal, menu logout beserta fungsiny, tampilan kriteria, tampilan sub kriteria, tampilan penilaian, halaman alternatif (menambah, melihat, mengedit dan menghapus data alternatif), fitur paginations dan fitur searching.
+- menyelesaiakan tamppilan home, tampilan login berserte fungsinya dan pop up login berhasil & gagal, tampilan register beserta fungsinya dan pop up login berhasil & gagal, menu logout beserta fungsiny, tampilan kriteria, tampilan sub kriteria, tampilan penilaian, halaman alternatif beserta pop up berhasil (menambah, melihat, mengedit dan menghapus data alternatif), fitur paginations dan fitur searching.
 
 ## v.2 = push kedua : 
-- menyelesaiakan halaman kriteria dan sub kriteria (menambah, melihat, mengedit dan menghapus data kriteria dan subkriteria), fitur paginations dan fitur searching, status akun user login pada halaman dashboard, alternatif, kriteria dan subkriteria.
+- menyelesaiakan halaman kriteria dan sub kriteria beserta pop up berhasil (menambah, melihat, mengedit dan menghapus data kriteria dan subkriteria), fitur paginations dan fitur searching, status akun user login pada halaman dashboard, alternatif, kriteria dan subkriteria.
 
 ## v.3 = push ketiga : 
-- menyelesaiakan halaman penilaian-part 01 'tabel penilaian' (menambah dan melihat penilaian berdasrkan alternatif dengan masing-masing kriteria yang memiliki subkriteria dengan nilai tertentu).
+- menyelesaiakan halaman penilaian-part 01 'tabel penilaian' beserta pop up berhasil (menambah, mengedit, menghapus dan melihat penilaian berdasrkan alternatif dengan masing-masing kriteria yang memiliki subkriteria dengan nilai tertentu).
 
 ## v.4 = push keempat : 
 - menyelesaiakan halaman penilaian-part 02 'tabel normalisasi dan perengkingan'
