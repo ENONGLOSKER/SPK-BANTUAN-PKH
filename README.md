@@ -1,5 +1,10 @@
-# SPK-BANTUAN-PKH
-Sistem Pendukung Keputusan Penerimaan Bantuan PKH
+# Sistem Pendukung Keputusan
+
+![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/SPK.png?raw=true)
+
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
+[![GitLab last commit](https://badgen.net/gitlab/last-commit/NickBusey/HomelabOS/)](https://gitlab.com/NickBusey/HomelabOS/-/commits)
 
 ## v.1 = push pertama : 
 - menyelesaiakan tamppilan home, tampilan login berserte fungsinya dan pop up login berhasil & gagal, tampilan register beserta fungsinya dan pop up login berhasil & gagal, menu logout beserta fungsiny, tampilan kriteria, tampilan sub kriteria, tampilan penilaian, halaman alternatif (menambah, melihat, mengedit dan menghapus data alternatif), fitur paginations dan fitur searching.
@@ -22,7 +27,68 @@ Sistem Pendukung Keputusan Penerimaan Bantuan PKH
 ## v.7 = push ketujuh :
 - project beres..😁
 
-# Alhamdulillah
+### =====================================================
+## Demo
+
+Lihat demo di link berikut :
+- instalasi :https://www.youtube.com/watch?v=uQg82Ubz_iA
+
+## Instalasi
+
+- clone repo terlebih dahulu
+```bash
+git clone https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH.git
+```
+- buat virtual env
+
+```bash
+python -m venv env
+```
+- aktifkan env
+
+```bash
+env\Scripts\activate
+```
+- masuk ke folder project
+
+```bash
+cd SPK-BANTUAN-PKH
+```
+- install semua kebutuhan
+
+```bash
+pip install -r requirements.txt
+```
+- Jalankan project
+
+```bash
+python manage.py runserver
+```
+- Buka Bowser kemudian ketikan
+
+```bash
+localhost:8000
+```
+### Akun Login
+- Username : admin atau operator
+- Password : django123 atau admin123
+
+## Features
+
+- Alternatif, Kriteria, Subkriteria, Penilaian, Normalisasi Matriks, Rengking, Laporan
+- Create
+- Read
+- Update
+- Delete
+- Pagination
+- Searching
+- Print
+- Pop up Massage
+- Login
+- Logout
+- Register
+
+## Screenshots
 - DASHBOARD
 ![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(571).png?raw=true)
 - ALTERNATIF
@@ -42,3 +108,8 @@ Sistem Pendukung Keputusan Penerimaan Bantuan PKH
 - LAPORAN
 ![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(579).png?raw=true)
 
+## Authors
+- [@ELQUSAIRI](https://www.github.com/ENONGLOSKER)
+
+## 🚀 About Me
+I'm a full stack developer...
