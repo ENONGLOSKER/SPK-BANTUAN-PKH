@@ -60,7 +60,7 @@ cd SPK-BANTUAN-PKH
 ```bash
 pip install -r requirements.txt
 ```
-- Jalankan project
+- jalankan project
 
 ```bash
 python manage.py runserver
@@ -69,6 +69,11 @@ python manage.py runserver
 
 ```bash
 localhost:8000
+```
+- atau
+
+```bash
+http://127.0.0.1:8000/
 ```
 ### Akun Login
 - Username : admin atau operator
