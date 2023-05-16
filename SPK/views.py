@@ -3,6 +3,7 @@ from .models import Alternatif, Kriteria, SubKriteria, Penilaian,Rengking
 from .forms import AlternatifForm, KriteriaForm, SubKriteriaForm, PenilaianForm
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib import messages
 from django.db.models import Sum, Max, Min, F
 from django.db.models.functions import Coalesce,Cast,Round
 from django.core.exceptions import ObjectDoesNotExist
@@ -36,8 +37,10 @@ def alternatif_create(request):
         form = AlternatifForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Tambahkan!")
             return redirect('data:alternatif')
     else:
+        messages.warning(request, 'Data tidak Valid!!')
         form = AlternatifForm()
     return render(request, 'alternatif_form.html', {'form': form})
 
@@ -48,6 +51,7 @@ def alternatif_update(request, id):
         form = AlternatifForm(request.POST, instance=alternatif)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Update!")
             return redirect('data:alternatif')
     else:
         form = AlternatifForm(instance=alternatif)
@@ -57,6 +61,7 @@ def alternatif_update(request, id):
 def alternatif_delete(request, id):
     alternatif = get_object_or_404(Alternatif, id=id)
     alternatif.delete()
+    messages.success(request, " Data Berhasil di Delete!")
     return redirect('data:alternatif')
 
 # fungsi untuk menampilkan semua data kriteria
@@ -83,6 +88,7 @@ def kriteria_create(request):
         form = KriteriaForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Tambahkan!")
             return redirect('data:kriteria')
     else:
         form = KriteriaForm()
@@ -95,6 +101,7 @@ def kriteria_update(request, id):
         form = KriteriaForm(request.POST, instance=kriteria)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Update!")
             return redirect('data:kriteria')
     else:
         form = KriteriaForm(instance=kriteria)
@@ -104,6 +111,7 @@ def kriteria_update(request, id):
 def kriteria_delete(request, id):
     kriteria = get_object_or_404(Kriteria, id=id)
     kriteria.delete()
+    messages.success(request, " Data Berhasil di Delete!")
     return redirect('data:kriteria')
 
 def subkriteria_list(request):
@@ -114,7 +122,7 @@ def subkriteria_list(request):
     else:        
         page = SubKriteria.objects.all()
 
-    halaman = Paginator(page,5)
+    halaman = Paginator(page,10)
     page_list = request.GET.get('page')
     page = halaman.get_page(page_list)  
     context ={
@@ -129,6 +137,7 @@ def subkriteria_create(request):
         form = SubKriteriaForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Tambah!")
             return redirect('data:sub_kriteria')
     return render(request, 'subkriteria_form.html', {'form': form})
 
@@ -139,12 +148,14 @@ def subkriteria_update(request, id):
         form = SubKriteriaForm(request.POST, instance=subkriteria)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Update!")
             return redirect('data:sub_kriteria')
     return render(request, 'subkriteria_form.html', {'form': form})
 
 def subkriteria_delete(request, id):
     subkriteria = get_object_or_404(SubKriteria, id=id)
     subkriteria.delete()
+    messages.success(request, " Data Berhasil di Delete!")
     return redirect('data:sub_kriteria')
 
 def create_penilaian(request):
@@ -152,6 +163,7 @@ def create_penilaian(request):
         form = PenilaianForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Tambah!")
             return redirect('data:penilaian')
     else:
         form = PenilaianForm()
@@ -190,14 +202,14 @@ def penilaian_list(request):
     max_penghasilan = max_values['max_penghasilan']
     min_penghasilan = min_values['min_penghasilan']
     # bumil dan bunsui
-    max_bumil_dan_bunsui = max_values['max_kondisi_rumah']
-    min_bumil_dan_bunsui = min_values['min_kondisi_rumah']
+    max_bumil_dan_bunsui = max_values['max_bumil_dan_bunsui']
+    min_bumil_dan_bunsui = min_values['min_bumil_dan_bunsui']
     # lansia
-    max_lansia = max_values['max_kondisi_rumah']
-    min_lansia = min_values['min_kondisi_rumah']
+    max_lansia = max_values['max_lansia']
+    min_lansia = min_values['min_lansia']
     # sekolah
-    max_anak_sekolah = max_values['max_kondisi_rumah']
-    min_anak_sekolah = min_values['min_kondisi_rumah']
+    max_anak_sekolah = max_values['max_anak_sekolah']
+    min_anak_sekolah = min_values['min_anak_sekolah']
 
     # Mengambil nilai bobot dari model Kriteria
     kriteria = Kriteria.objects.all()
@@ -207,54 +219,130 @@ def penilaian_list(request):
     bobot_lansia = kriteria.get(nama_kriteria='Lansia').bobot
     bobot_anak_sekolah = kriteria.get(nama_kriteria='Anak Sekolah').bobot
 
+    print("Bobot Kondisi Rumah:", bobot_kondisi_rumah)
+    print("Bobot Penghasilan:", bobot_penghasilan)
+    print("Bobot Bumil dan Bunsui:", bobot_bumil_dan_bunsui)
+    print("Bobot Lansia:", bobot_lansia)
+    print("Bobot Anak Sekolah:", bobot_anak_sekolah)
+
     # NORMALISASI
-    normalisasi = Penilaian.objects.annotate(
-        kondisi_rumah_normalized=Coalesce(F('kondisi_rumah__nilai_sub_kriteria') / Max('kondisi_rumah__nilai_sub_kriteria'), 0),
-        penghasilan_normalized=Coalesce(Min('penghasilan__nilai_sub_kriteria') / F('penghasilan__nilai_sub_kriteria'), 0),
-        bumil_dan_bunsui_normalized=Coalesce(F('bumil_dan_bunsui__nilai_sub_kriteria') / Max('bumil_dan_bunsui__nilai_sub_kriteria'), 0),
-        lansia_normalized=Coalesce(F('lansia__nilai_sub_kriteria') / Max('lansia__nilai_sub_kriteria'), 0),
-        anak_sekolah_normalized=Coalesce(F('anak_sekolah__nilai_sub_kriteria') / Max('anak_sekolah__nilai_sub_kriteria'), 0)
-    ).annotate(
-        kondisi_rumah_score=F('kondisi_rumah_normalized') * bobot_kondisi_rumah,
-        penghasilan_score=F('penghasilan_normalized') * bobot_penghasilan,
-        bumil_dan_bunsui_score=F('bumil_dan_bunsui_normalized') * bobot_bumil_dan_bunsui,
-        lansia_score=F('lansia_normalized') * bobot_lansia,
-        anak_sekolah_score=F('anak_sekolah_normalized') * bobot_anak_sekolah,
-    ).annotate(
-        total_score=Round(F('kondisi_rumah_score') + F('penghasilan_score') + F('bumil_dan_bunsui_score') + F('lansia_score') + F('anak_sekolah_score'), 2)
-    )
+    data_list = []
 
-    # Simpan data rengking
-    rengking_list = []
-    for reng in normalisasi:
-        try:
-            alternatif = Alternatif.objects.get(nama_alternatif=reng.nama.nama_alternatif)
-        except ObjectDoesNotExist:
-            # Handle jika tidak ditemukan instance Alternatif
-            continue
+    for data in penilaian:
+        max_kondisi_rumah = max_values['max_kondisi_rumah']
+        min_penghasilan = min_values['min_penghasilan']
+        max_bumil_dan_bunsui = max_values['max_bumil_dan_bunsui']
+        max_lansia = max_values['max_lansia']
+        max_anak_sekolah = max_values['max_anak_sekolah']
 
-        rengking = Rengking(
-            alternatif=alternatif,
-            rumah=f"{reng.kondisi_rumah_normalized} x {bobot_kondisi_rumah}",
-            penghasilan=f"{reng.penghasilan_normalized} x {bobot_penghasilan}",
-            bumil_bunsui=f"{reng.bumil_dan_bunsui_normalized} x {bobot_bumil_dan_bunsui}",
-            lansia=f"{reng.lansia_normalized} x {bobot_lansia}",
-            anak_sekolah=f"{reng.anak_sekolah_normalized} x {bobot_anak_sekolah}",
-            total_nilai=reng.total_score,
-            ket='Layak' if reng.total_score >= 0.6 else 'Tidak Layak'
-        )
-        rengking_list.append(rengking)
+        kondisi_rumah = data.kondisi_rumah.nilai_sub_kriteria / max_kondisi_rumah
+        penghasilan = min_penghasilan / data.penghasilan.nilai_sub_kriteria
+        bumil_dan_bunsui = data.bumil_dan_bunsui.nilai_sub_kriteria / max_bumil_dan_bunsui
+        lansia = data.lansia.nilai_sub_kriteria / max_lansia
+        anak_sekolah = data.anak_sekolah.nilai_sub_kriteria / max_anak_sekolah
 
-    # Menghapus data rengking sebelumnya
-    Rengking.objects.all().delete()
+        print('bagi rumah',kondisi_rumah)
+        kondisi_rumah = round(kondisi_rumah, 2)
+        penghasilan = round(penghasilan, 2)
+        bumil_dan_bunsui = round(bumil_dan_bunsui, 2)
+        lansia = round(lansia, 2)
+        anak_sekolah = round(anak_sekolah, 2)
 
-    # Menyimpan data ke tabel Rengking
-    Rengking.objects.bulk_create(rengking_list)
+        data_item = {
+            'alternatif': data.nama,
+            'kondisi_rumah': kondisi_rumah,
+            'penghasilan': penghasilan,
+            'bumil_dan_bunsui': bumil_dan_bunsui,
+            'lansia': lansia,
+            'anak_sekolah': anak_sekolah
+        }
 
+        data_list.append(data_item)
+
+    # MATRIK
+    matriks = []
+
+    for data in penilaian:
+        max_kondisi_rumah = max_values['max_kondisi_rumah']
+        min_penghasilan = min_values['min_penghasilan']
+        max_bumil_dan_bunsui = max_values['max_bumil_dan_bunsui']
+        max_lansia = max_values['max_lansia']
+        max_anak_sekolah = max_values['max_anak_sekolah']
+
+        kondisi_rumah = data.kondisi_rumah.nilai_sub_kriteria / max_kondisi_rumah
+        penghasilan = min_penghasilan / data.penghasilan.nilai_sub_kriteria
+        bumil_dan_bunsui = data.bumil_dan_bunsui.nilai_sub_kriteria / max_bumil_dan_bunsui
+        lansia = data.lansia.nilai_sub_kriteria / max_lansia
+        anak_sekolah = data.anak_sekolah.nilai_sub_kriteria / max_anak_sekolah
+
+        print('bagi rumah',kondisi_rumah)
+
+        # Mengalikan dengan bobot
+        kondisi_rumah *= bobot_kondisi_rumah
+        penghasilan *= bobot_penghasilan
+        bumil_dan_bunsui *= bobot_bumil_dan_bunsui
+        lansia *= bobot_lansia
+        anak_sekolah *= bobot_anak_sekolah
+
+        print('kali rumah',kondisi_rumah)
+
+        # Menjumlahkan hasil perkalian pada setiap baris
+        total = kondisi_rumah + penghasilan + bumil_dan_bunsui + lansia + anak_sekolah
+
+        kondisi_rumah = round(kondisi_rumah, 2)
+        penghasilan = round(penghasilan, 2)
+        bumil_dan_bunsui = round(bumil_dan_bunsui, 2)
+        lansia = round(lansia, 2)
+        anak_sekolah = round(anak_sekolah, 2)
+        total = round(total, 2)
+
+        
+
+        # Mengambil nilai ket dari template
+        ket = ''
+        if total >= 0.8:
+            ket = 'Layak'
+        else:
+            ket = 'Tidak Layak'
+
+        data_item = {
+            'alternatif': data.nama,
+            'kondisi_rumah': kondisi_rumah,
+            'penghasilan': penghasilan,
+            'bumil_dan_bunsui': bumil_dan_bunsui,
+            'lansia': lansia,
+            'anak_sekolah': anak_sekolah,
+            'total': total,
+            'ket': ket  # Tambahkan nilai ket
+        }
+
+        matriks.append(data_item)
+
+        # Cek apakah data dengan alternatif yang sama sudah ada dalam Rengking
+        rengking, created = Rengking.objects.get_or_create(alternatif=data.nama)
+
+        # Assign values to fields
+        rengking.rumah = str(kondisi_rumah)
+        rengking.penghasilan = str(penghasilan)
+        rengking.bumil_bunsui = str(bumil_dan_bunsui)
+        rengking.lansia = str(lansia)
+        rengking.anak_sekolah = str(anak_sekolah)
+
+        # Check if total is calculated
+        if total:
+            rengking.total_nilai = total
+        else:
+            # Assign a default value or handle the case when total is not calculated
+            rengking.total_nilai = 0.0
+
+        rengking.ket = ket
+        rengking.save()
 
     context = {
         'datas': penilaian,        
-        'normalisasi': normalisasi,
+        'normalisasi': data_list,
+        'matriks': matriks,
+        # 
         'max_kondisi_rumah': max_kondisi_rumah,
         'min_kondisi_rumah': min_kondisi_rumah,
         'max_penghasilan': max_penghasilan,
@@ -282,6 +370,7 @@ def update_penilaian(request, id):
         form = PenilaianForm(request.POST, instance=penilaian)
         if form.is_valid():
             form.save()
+            messages.success(request, " Data Berhasil di Update!")
             return redirect('data:penilaian')
     else:
         form = PenilaianForm(instance=penilaian)
@@ -297,6 +386,7 @@ def delete_penilaian(request,id):
 
     if request.method == 'POST':
         penilaian.delete()
+        messages.success(request, " Data Berhasil di Delete!")
         return redirect('data:penilaian')
 
     context = {
@@ -319,7 +409,7 @@ def print_laporan(request):
     tanggal = date.today().strftime("%d %B %Y")
 
     context = {
-        'rengking_data': Rengking.objects.all(),
+        'rengking_data': Rengking.objects.all().order_by('-total_nilai'),
         'tanggal': tanggal,
     }
 

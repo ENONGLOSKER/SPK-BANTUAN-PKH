@@ -92,14 +92,14 @@
                 </thead>
                 <tbody>       
                     {% for reng in rengking_data %}
-                        <tr>
-                            <td class="text-center">{{ forloop.counter }}</td>
-                            <td class="text-center">{{ reng.alternatif.nik }}</td>
-                            <td class="text-center">{{ reng.alternatif.nama_alternatif }}</td>
-                            <td class="text-center">{{ reng.total_nilai }}</td>
-                            <td class="text-center">{{ reng.ket }}</td>
-                        </tr>
-                    {% endfor %}                                                                     
+                    <tr>
+                        <td class="text-center">{{ forloop.counter }}</td>
+                        <td class="text-center">{{ reng.alternatif.nik  }}</td>
+                        <td>{{ reng.alternatif.nama_alternatif }}</td>
+                        <td class="text-center">{{ reng.total_nilai }}</td>
+                        <td>{{ reng.ket  }}</td>
+                    </tr>
+                {% endfor %}                                                                      
                 </tbody>
             </table>
 

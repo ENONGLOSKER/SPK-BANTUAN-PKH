@@ -47,7 +47,7 @@ class Rengking(models.Model):
     bumil_bunsui = models.CharField(max_length=50)
     lansia = models.CharField(max_length=50)
     anak_sekolah = models.CharField(max_length=50)
-    total_nilai = models.FloatField()
+    total_nilai = models.FloatField(null=True)
     ket = models.CharField(max_length=50)
 
     def __str__(self):

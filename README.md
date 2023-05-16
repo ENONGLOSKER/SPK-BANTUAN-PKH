@@ -26,17 +26,19 @@ Sistem Pendukung Keputusan Penerimaan Bantuan PKH
 - DASHBOARD
 ![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(571).png?raw=true)
 - ALTERNATIF
-![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(573).png?raw=true)
+![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(581).png?raw=true)
 - KERITERIA
-![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(574).png?raw=true)
+![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(573).png?raw=true)
 - SUBKRITERIA
-![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(575).png?raw=true)
+![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(574).png?raw=true)
 - PENILAIAN TABEL
-![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(576).png?raw=true)
+![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(575).png?raw=true)
 - PENILAIAN NORMALISASI
-![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(577).png?raw=true)
+![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(576).png?raw=true)
 - PENILAIAN PERENGKINGAN
+![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(577).png?raw=true)
+- PERENGKINGAN
 ![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(578).png?raw=true)
-- LAPORAN PERENGKINGAN
+- LAPORAN
 ![alt text](https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH/blob/master/foto/Screenshot%20(579).png?raw=true)
 
