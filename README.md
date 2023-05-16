@@ -30,42 +30,43 @@ Sistem Pendukung Keputusan Penerimaan Bantuan PKH
 ## Demo
 
 Lihat demo di link berikut :
+- instalasi :https://www.youtube.com/watch?v=uQg82Ubz_iA
 
 ## Instalasi
 
 - clone repo terlebih dahulu
 ```bash
-  git clone https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH.git
+git clone https://github.com/ENONGLOSKER/SPK-BANTUAN-PKH.git
 ```
 - buat virtual env
 
 ```bash
-  python -m venv env
+python -m venv env
 ```
 - aktifkan env
 
 ```bash
-  env\Scripts\activate
+env\Scripts\activate
 ```
 - masuk ke folder project
 
 ```bash
-  cd SPK-BANTUAN-PKH
+cd SPK-BANTUAN-PKH
 ```
 - install semua kebutuhan
 
 ```bash
-  pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 - Jalankan project
 
 ```bash
-  python manage.py runserver
+python manage.py runserver
 ```
 - Buka Bowser kemudian ketikan
 
 ```bash
-  localhost:8000
+localhost:8000
 ```
 ### Akun Login
 - Username : admin atau operator
