@@ -32,7 +32,7 @@
 
 Lihat demo di link berikut :
 - instalasi : https://www.youtube.com/watch?v=uQg82Ubz_iA
-- penggunaan : 
+- penggunaan : https://youtu.be/vOw3wy7AY50
 
 ## Instalasi
 
