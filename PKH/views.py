@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from SPK.models import Alternatif, Kriteria, SubKriteria, Penilaian
+from django.views.decorators.csrf import csrf_protect
+
 
 def home(request):
     template_name='home.html'
@@ -24,7 +26,7 @@ def index(request):
 
     template_name='index.html'
     return render(request, template_name,context)
-
+@csrf_protect
 def user_register(request):
     if request.method=='POST':
         username=request.POST.get('username')
@@ -42,7 +44,7 @@ def user_register(request):
             return redirect('login') 
 
     return render(request,'regis_ter.html')
-
+@csrf_protect
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
