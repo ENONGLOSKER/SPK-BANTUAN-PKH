@@ -73,7 +73,7 @@ def kriteria_list(request):
     else:        
         page = Kriteria.objects.all()
 
-    halaman = Paginator(page,3)
+    halaman = Paginator(page,5)
     page_list = request.GET.get('page')
     page = halaman.get_page(page_list)  
     context ={
@@ -219,12 +219,6 @@ def penilaian_list(request):
     bobot_lansia = kriteria.get(nama_kriteria='Lansia').bobot
     bobot_anak_sekolah = kriteria.get(nama_kriteria='Anak Sekolah').bobot
 
-    print("Bobot Kondisi Rumah:", bobot_kondisi_rumah)
-    print("Bobot Penghasilan:", bobot_penghasilan)
-    print("Bobot Bumil dan Bunsui:", bobot_bumil_dan_bunsui)
-    print("Bobot Lansia:", bobot_lansia)
-    print("Bobot Anak Sekolah:", bobot_anak_sekolah)
-
     # NORMALISASI
     data_list = []
 
@@ -275,8 +269,6 @@ def penilaian_list(request):
         lansia = data.lansia.nilai_sub_kriteria / max_lansia
         anak_sekolah = data.anak_sekolah.nilai_sub_kriteria / max_anak_sekolah
 
-        print('bagi rumah',kondisi_rumah)
-
         # Mengalikan dengan bobot
         kondisi_rumah *= bobot_kondisi_rumah
         penghasilan *= bobot_penghasilan
@@ -284,10 +276,15 @@ def penilaian_list(request):
         lansia *= bobot_lansia
         anak_sekolah *= bobot_anak_sekolah
 
-        print('kali rumah',kondisi_rumah)
+        print('nilai evaluasi rumah',kondisi_rumah)
+        print('nilai evaluasi penghasilan',penghasilan)
+        print('nilai evaluasi bumil',bumil_dan_bunsui)
+        print('nilai evaluasi lansia',lansia)
+        print('nilai evaluasi sekolah',anak_sekolah)
 
         # Menjumlahkan hasil perkalian pada setiap baris
         total = kondisi_rumah + penghasilan + bumil_dan_bunsui + lansia + anak_sekolah
+        print('total ',total)
 
         kondisi_rumah = round(kondisi_rumah, 2)
         penghasilan = round(penghasilan, 2)
@@ -296,11 +293,9 @@ def penilaian_list(request):
         anak_sekolah = round(anak_sekolah, 2)
         total = round(total, 2)
 
-        
-
         # Mengambil nilai ket dari template
         ket = ''
-        if total >= 0.8:
+        if total >= 0.6:
             ket = 'Layak'
         else:
             ket = 'Tidak Layak'
@@ -382,12 +377,10 @@ def update_penilaian(request, id):
     return render(request, 'penilaian_form.html', context)
 
 def delete_penilaian(request,id):
-    penilaian = Penilaian.objects.get(id=id)
-
-    if request.method == 'POST':
-        penilaian.delete()
-        messages.success(request, " Data Berhasil di Delete!")
-        return redirect('data:penilaian')
+    penilaian = get_object_or_404(Penilaian, id=id)
+    penilaian.delete()
+    messages.success(request, " Data Berhasil di Delete!")
+    return redirect('data:penilaian')
 
     context = {
         'penilaian': penilaian
