@@ -2,45 +2,44 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Alternatif, Kriteria, SubKriteria, Penilaian,Rengking
 from .forms import AlternatifForm, KriteriaForm, SubKriteriaForm, PenilaianForm
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.contrib import messages
-from django.db.models import Sum, Max, Min, F
+from django.db.models import Sum, Max, Min, F, Q
 from django.db.models.functions import Coalesce,Cast,Round
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import date
 
 # fungsi untuk menampilkan semua data alternatif
 def alternatif_list(request):
+    # ambil semua data alternatif dan urutkan berdasarkan id yg terbesar
     alternatif = Alternatif.objects.all().order_by('-id')
-
-    # paginations & searching
+    # searching
     cari = request.GET.get('cari')
     if cari:
         page=Alternatif.objects.filter(Q(simbol__icontains=cari) |Q(nama_alternatif__icontains=cari))
     else:        
         page = Alternatif.objects.all()
-
+    # paginations
     halaman = Paginator(page,5)
     page_list = request.GET.get('page')
     page = halaman.get_page(page_list)  
-
+    # lempar ke tamplates
     context = {
         'datas': alternatif,
         'page_obj': page,
     }
-
     return render(request, 'alternatif.html', context)
 
 # fungsi untuk menambah data alternatif baru
 def alternatif_create(request):
+    # cek method
     if request.method == 'POST':
+        # instance form dan validasi isi datanya
         form = AlternatifForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, " Data Berhasil di Tambahkan!")
             return redirect('data:alternatif')
     else:
-        messages.warning(request, 'Data tidak Valid!!')
         form = AlternatifForm()
     return render(request, 'alternatif_form.html', {'form': form})
 
@@ -64,7 +63,6 @@ def alternatif_delete(request, id):
     messages.success(request, " Data Berhasil di Delete!")
     return redirect('data:alternatif')
 
-# fungsi untuk menampilkan semua data kriteria
 def kriteria_list(request):
     kriteria = Kriteria.objects.all()
     cari = request.GET.get('cari')
@@ -82,7 +80,6 @@ def kriteria_list(request):
     }
     return render(request, 'kriteria.html', context)
 
-# fungsi untuk menambah data kriteria baru
 def kriteria_create(request):
     if request.method == 'POST':
         form = KriteriaForm(request.POST)
@@ -94,7 +91,6 @@ def kriteria_create(request):
         form = KriteriaForm()
     return render(request, 'kriteria_form.html', {'form': form})
 
-# fungsi untuk mengubah data kriteria yang sudah ada
 def kriteria_update(request, id):
     kriteria = get_object_or_404(Kriteria, id=id)
     if request.method == 'POST':
@@ -107,7 +103,6 @@ def kriteria_update(request, id):
         form = KriteriaForm(instance=kriteria)
     return render(request, 'kriteria_form.html', {'form': form})
 
-# fungsi untuk menghapus data kriteria yang sudah ada
 def kriteria_delete(request, id):
     kriteria = get_object_or_404(Kriteria, id=id)
     kriteria.delete()
@@ -221,7 +216,6 @@ def penilaian_list(request):
 
     # NORMALISASI
     data_list = []
-
     for data in penilaian:
         max_kondisi_rumah = max_values['max_kondisi_rumah']
         min_penghasilan = min_values['min_penghasilan']
@@ -255,7 +249,6 @@ def penilaian_list(request):
 
     # MATRIK
     matriks = []
-
     for data in penilaian:
         max_kondisi_rumah = max_values['max_kondisi_rumah']
         min_penghasilan = min_values['min_penghasilan']
@@ -276,16 +269,10 @@ def penilaian_list(request):
         lansia *= bobot_lansia
         anak_sekolah *= bobot_anak_sekolah
 
-        print('nilai evaluasi rumah',kondisi_rumah)
-        print('nilai evaluasi penghasilan',penghasilan)
-        print('nilai evaluasi bumil',bumil_dan_bunsui)
-        print('nilai evaluasi lansia',lansia)
-        print('nilai evaluasi sekolah',anak_sekolah)
-
         # Menjumlahkan hasil perkalian pada setiap baris
         total = kondisi_rumah + penghasilan + bumil_dan_bunsui + lansia + anak_sekolah
-        print('total ',total)
 
+        # format agar 2 angka dibelakang koma
         kondisi_rumah = round(kondisi_rumah, 2)
         penghasilan = round(penghasilan, 2)
         bumil_dan_bunsui = round(bumil_dan_bunsui, 2)
@@ -293,13 +280,13 @@ def penilaian_list(request):
         anak_sekolah = round(anak_sekolah, 2)
         total = round(total, 2)
 
-        # Mengambil nilai ket dari template
+        # Mengambil nilai ket
         ket = ''
         if total >= 0.6:
             ket = 'Layak'
         else:
             ket = 'Tidak Layak'
-
+        # tampung semuanya
         data_item = {
             'alternatif': data.nama,
             'kondisi_rumah': kondisi_rumah,
@@ -310,24 +297,24 @@ def penilaian_list(request):
             'total': total,
             'ket': ket  # Tambahkan nilai ket
         }
-
+        # tambah ke list matriks
         matriks.append(data_item)
 
         # Cek apakah data dengan alternatif yang sama sudah ada dalam Rengking
         rengking, created = Rengking.objects.get_or_create(alternatif=data.nama)
 
-        # Assign values to fields
+        # Assign values ke fields
         rengking.rumah = str(kondisi_rumah)
         rengking.penghasilan = str(penghasilan)
         rengking.bumil_bunsui = str(bumil_dan_bunsui)
         rengking.lansia = str(lansia)
         rengking.anak_sekolah = str(anak_sekolah)
 
-        # Check if total is calculated
+        # Cek jika total calculated
         if total:
             rengking.total_nilai = total
         else:
-            # Assign a default value or handle the case when total is not calculated
+            # Assign  default value atau handle ketika total tidak di calculated
             rengking.total_nilai = 0.0
 
         rengking.ket = ket
@@ -337,7 +324,7 @@ def penilaian_list(request):
         'datas': penilaian,        
         'normalisasi': data_list,
         'matriks': matriks,
-        # 
+        # max dan min
         'max_kondisi_rumah': max_kondisi_rumah,
         'min_kondisi_rumah': min_kondisi_rumah,
         'max_penghasilan': max_penghasilan,
@@ -398,7 +385,7 @@ def rengking(request):
     return render(request, 'rengking.html', context)
 
 def print_laporan(request):
-    # Logika untuk mendapatkan tanggal saat ini
+    # mendapatkan tanggal saat ini
     tanggal = date.today().strftime("%d %B %Y")
 
     context = {
