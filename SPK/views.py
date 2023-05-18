@@ -228,8 +228,7 @@ def penilaian_list(request):
         bumil_dan_bunsui = data.bumil_dan_bunsui.nilai_sub_kriteria / max_bumil_dan_bunsui
         lansia = data.lansia.nilai_sub_kriteria / max_lansia
         anak_sekolah = data.anak_sekolah.nilai_sub_kriteria / max_anak_sekolah
-
-        print('bagi rumah',kondisi_rumah)
+        
         kondisi_rumah = round(kondisi_rumah, 2)
         penghasilan = round(penghasilan, 2)
         bumil_dan_bunsui = round(bumil_dan_bunsui, 2)
